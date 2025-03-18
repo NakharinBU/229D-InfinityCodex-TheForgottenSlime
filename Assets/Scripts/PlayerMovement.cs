@@ -10,10 +10,9 @@ public class PlayerMovement : MonoBehaviour
 
     private float verticalInput = 0;
     private float horizontalInput = 0;
-    private Rigidbody rb;
 
-    public float acceleration;
-    public float groundSpeed;
+    private Rigidbody rb;
+    public Transform cameraTransform;
 
     private bool isGrounded;
 
@@ -31,8 +30,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 direction = new Vector3(horizontalInput, 0, verticalInput).normalized;
-        rb.MovePosition(rb.position + direction * speed * Time.fixedDeltaTime);
+        Vector3 forward = cameraTransform.forward;
+        Vector3 right = cameraTransform.right;
+
+        forward.y = 0;
+        right.y = 0;
+
+        forward.Normalize();
+        right.Normalize();
+
+        Vector3 moveDirection = (forward * verticalInput + right * horizontalInput).normalized;
+
+        rb.MovePosition(rb.position + moveDirection * speed * Time.fixedDeltaTime);
+
+        /*Vector3 direction = new Vector3(horizontalInput, 0, verticalInput).normalized;
+        rb.MovePosition(rb.position + direction * speed * Time.fixedDeltaTime);*/
     }
 
     void Jump()
