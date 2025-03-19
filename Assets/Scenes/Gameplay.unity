@@ -1526,8 +1526,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   solidEffect: {fileID: 1740055323}
-  liquidEffect: {fileID: 1864615197}
-  gasEffect: {fileID: 1789836759}
+  liquidEffect: {fileID: 1789836759}
+  gasEffect: {fileID: 1864615197}
   solidSpeed: 5
   liquidSpeed: 8
   gasSpeed: 3
