@@ -5,54 +5,45 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 5;
-    public float jumpForce = 5;
-
-    private float verticalInput = 0;
-    private float horizontalInput = 0;
-
+    public float moveSpeed = 5f;
+    public float jumpForce = 7f;
     private Rigidbody rb;
-    public Transform cameraTransform;
-
     private bool isGrounded;
 
-    private void Start()
+    void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    private void Update()
+    void Update()
     {
-        verticalInput = Input.GetAxis("Vertical");
-        horizontalInput = Input.GetAxis("Horizontal");
+        Move();
         Jump();
     }
 
-    private void FixedUpdate()
+    void Move()
     {
-        Vector3 forward = cameraTransform.forward;
-        Vector3 right = cameraTransform.right;
+        float moveX = Input.GetAxis("Horizontal");
+        float moveZ = Input.GetAxis("Vertical");
 
-        forward.y = 0;
-        right.y = 0;
-
-        forward.Normalize();
-        right.Normalize();
-
-        Vector3 moveDirection = (forward * verticalInput + right * horizontalInput).normalized;
-
-        rb.MovePosition(rb.position + moveDirection * speed * Time.fixedDeltaTime);
-
-        /*Vector3 direction = new Vector3(horizontalInput, 0, verticalInput).normalized;
-        rb.MovePosition(rb.position + direction * speed * Time.fixedDeltaTime);*/
+        Vector3 movement = new Vector3(moveX, 0, moveZ) * moveSpeed;
+        rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
     }
 
     void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            rb.AddForce(jumpForce * Vector3.up, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            isGrounded = false;
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
 }
