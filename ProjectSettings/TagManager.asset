@@ -5,16 +5,17 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - SmallGap
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Slime
   - Water
   - UI
   - Obstacle
-  - 
-  - 
+  - PassableForLiquid
+  - PassableWall
   - 
   - 
   - 

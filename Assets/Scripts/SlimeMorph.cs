@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-
+using UnityEngine.UI;
+using TMPro;
 public class SlimeMorph : MonoBehaviour
 {
     public enum SlimeState { Solid, Liquid, Gas }
@@ -10,6 +12,8 @@ public class SlimeMorph : MonoBehaviour
     private bool isSolid = false;
     private bool isLiquid = false;
     private bool isGas = false;
+
+    public TextMeshProUGUI stateText;
 
     public float cooldownTime = 2.0f;
     public float cooldownTimer = 0.0f;
@@ -37,7 +41,7 @@ public class SlimeMorph : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         sphereCollider = GetComponent<SphereCollider>();
         originalScale = transform.localScale;
-        
+        Debug.Log("Slime Layer: " + LayerMask.LayerToName(gameObject.layer));
     }
 
     void Update()
@@ -76,28 +80,30 @@ public class SlimeMorph : MonoBehaviour
                 sphereCollider.enabled = true;
                 transform.localScale = originalScale;
                 isSolid = true;
+                Physics.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("PassableForLiquid"), false);
+                Physics.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("PassableWall"), false);
+
                 break;
 
             case SlimeState.Liquid:
                 rb.mass = 1f;
                 rb.drag = 3f;
-                sphereCollider.enabled = false;
                 transform.localScale = originalScale * 0.7f;
+                Physics.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("PassableForLiquid"), true);
                 break;
 
             case SlimeState.Gas:
                 rb.mass = 0.5f;
                 rb.drag = 0.2f;
-                sphereCollider.enabled = false;
                 transform.localScale = originalScale * 1.3f;
+                Physics.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("PassableWall"), true);
                 break;
         }
-
+        UpdateStateUI();
         ChangeStateEffect(newState);
     }
     void ChangeStateEffect(SlimeState newState)
     {
-
 
         if (solidEffect.isPlaying) solidEffect.Stop();
         if (liquidEffect.isPlaying) liquidEffect.Stop();
@@ -123,6 +129,18 @@ public class SlimeMorph : MonoBehaviour
             hasPlayedGasEffect = true;
             hasPlayedSolidEffect = false;
             hasPlayedLiquidEffect = false;
+        }
+    }
+    void UpdateStateUI()
+    {
+        stateText.text = "Current State: " + currentState.ToString();
+    }
+    void OnCollisionStay(Collision collision)
+    {
+        if (currentState == SlimeState.Liquid)
+        {
+            Vector3 slopeDirection = Vector3.ProjectOnPlane(Vector3.down, collision.contacts[0].normal);
+            rb.AddForce(slopeDirection * liquidSpeed, ForceMode.Acceleration);
         }
     }
 
