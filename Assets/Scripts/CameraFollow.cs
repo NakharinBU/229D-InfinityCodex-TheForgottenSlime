@@ -33,6 +33,7 @@ public class CameraFollow : MonoBehaviour
         RaycastHit hit;
         Vector3 desiredPosition = target.position - transform.forward * defaultDistance;
 
+
         if (Physics.Raycast(target.position, -transform.forward, out hit, defaultDistance, obstacleMask))
         {
             currentDistance = hit.distance * 0.9f;
