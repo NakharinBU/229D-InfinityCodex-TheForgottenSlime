@@ -7,18 +7,19 @@ using static SlimeMorph;
 public class PlayerMovement : MonoBehaviour
 {
     public Transform cameraTransform;
-
     public float moveSpeed = 5f;
     public float jumpForce = 7f;
     private Rigidbody rb;
     private bool isGrounded;
-
+    AudioSource audioSource;
+    AudioClip movement;
     SlimeMorph SlimeMorph;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         SlimeMorph = GetComponent<SlimeMorph>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -49,8 +50,8 @@ public class PlayerMovement : MonoBehaviour
         Vector3 moveDirection = forward * moveZ + right * moveX;
         moveDirection.Normalize();
 
-
         rb.velocity = new Vector3(moveDirection.x * moveSpeed, rb.velocity.y, moveDirection.z * moveSpeed);
+
         if (moveDirection.magnitude > 0.1f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
@@ -72,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
             rb.drag = 1f;
             rb.AddForce(moveDirection * SlimeMorph.gasSpeed, ForceMode.Acceleration);
         }
+        
     }
     void Jump()
     {

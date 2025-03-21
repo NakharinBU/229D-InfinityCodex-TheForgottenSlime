@@ -9,6 +9,9 @@ public class SlimeMorph : MonoBehaviour
     public enum SlimeState { Solid, Liquid, Gas }
     public SlimeState currentState = SlimeState.Solid;
 
+    AudioSource audioSource;
+    public AudioClip solidSFX, liquidSFX, gasSFX;
+
     private bool isSolid = false;
     private bool isLiquid = false;
     private bool isGas = false;
@@ -38,6 +41,7 @@ public class SlimeMorph : MonoBehaviour
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
         sphereCollider = GetComponent<SphereCollider>();
         originalScale = transform.localScale;
@@ -83,6 +87,7 @@ public class SlimeMorph : MonoBehaviour
                 isSolid = true;
                 Physics.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("PassableForLiquid"), false);
                 Physics.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("PassableWall"), false);
+                audioSource.PlayOneShot(solidSFX);
 
                 break;
 
@@ -91,6 +96,7 @@ public class SlimeMorph : MonoBehaviour
                 rb.drag = 3f;
                 transform.localScale = originalScale * 0.7f;
                 Physics.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("PassableForLiquid"), true);
+                audioSource.PlayOneShot(liquidSFX);
                 break;
 
             case SlimeState.Gas:
@@ -98,6 +104,7 @@ public class SlimeMorph : MonoBehaviour
                 rb.drag = 0.2f;
                 transform.localScale = originalScale * 1.3f;
                 Physics.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("PassableWall"), true);
+                audioSource.PlayOneShot(gasSFX);
                 break;
         }
         UpdateStateUI();
