@@ -4,30 +4,44 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform player;
-    public float mouseSensitivity = 100f;
-    private float xRotation = 0f;
+    public Transform target;
+    public float mouseSensitivity = 2f;
+    public float defaultDistance = 5f;
+    public Vector2 pitchMinMax = new Vector2(-40, 80);
+    public LayerMask obstacleMask;
 
-    private void Start()
+    private float cameraYaw = 0f;
+    private float cameraPitch = 0f;
+    private float currentDistance;
+
+    void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        currentDistance = defaultDistance;
     }
 
-    private void Update()
+    void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        cameraYaw += mouseX;
+        cameraPitch -= mouseY;
+        cameraPitch = Mathf.Clamp(cameraPitch, pitchMinMax.x, pitchMinMax.y);
 
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        transform.rotation = Quaternion.Euler(cameraPitch, cameraYaw, 0);
 
-        player.Rotate(Vector3.up * mouseX);
-    }
+        RaycastHit hit;
+        Vector3 desiredPosition = target.position - transform.forward * defaultDistance;
 
-    private void LateUpdate()
-    {
-        transform.position = player.position;
+        if (Physics.Raycast(target.position, -transform.forward, out hit, defaultDistance, obstacleMask))
+        {
+            currentDistance = hit.distance * 0.9f;
+        }
+        else
+        {
+            currentDistance = defaultDistance;
+        }
+
+        transform.position = target.position - transform.forward * currentDistance;
     }
 }

@@ -62,6 +62,7 @@ public class SlimeMorph : MonoBehaviour
         {
             rb.AddForce(Vector3.up * gasFloatSpeed, ForceMode.Acceleration);
         }
+
     }
 
     void ChangeState(SlimeState newState)

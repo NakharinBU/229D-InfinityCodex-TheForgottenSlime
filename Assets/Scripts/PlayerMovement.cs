@@ -6,6 +6,8 @@ using static SlimeMorph;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public Transform cameraTransform;
+
     public float moveSpeed = 5f;
     public float jumpForce = 7f;
     private Rigidbody rb;
@@ -34,30 +36,52 @@ public class PlayerMovement : MonoBehaviour
                              (SlimeMorph.currentState == SlimeState.Liquid) ? SlimeMorph.liquidSpeed :
                              SlimeMorph.gasSpeed;
 
-        Vector3 movement = new Vector3(moveX, 0, moveZ) * currentSpeed;
-        rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
+        Vector3 forward = cameraTransform.forward;
+        Vector3 right = cameraTransform.right;
 
-        
-        if (SlimeMorph.currentState == SlimeState.Liquid)
+        forward.y = 0;
+        right.y = 0;
+
+        forward.Normalize();
+        right.Normalize();
+
+
+        Vector3 moveDirection = forward * moveZ + right * moveX;
+        moveDirection.Normalize();
+
+
+        rb.velocity = new Vector3(moveDirection.x * moveSpeed, rb.velocity.y, moveDirection.z * moveSpeed);
+        if (moveDirection.magnitude > 0.1f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+        }
+
+        if (SlimeMorph.currentState == SlimeState.Solid)
         {
             rb.drag = 5f;
+            rb.AddForce(moveDirection * SlimeMorph.solidSpeed, ForceMode.Acceleration);
         }
-        else
+        else if (SlimeMorph.currentState == SlimeState.Liquid)
         {
             rb.drag = 1f;
+            rb.AddForce(moveDirection * SlimeMorph.liquidSpeed, ForceMode.Acceleration);
         }
-
-        if (SlimeMorph.currentState == SlimeState.Gas && Input.GetKey(KeyCode.Space))
+        else if (SlimeMorph.currentState == SlimeState.Gas)
         {
-            rb.AddForce(Vector3.up * SlimeMorph.gasFloatSpeed, ForceMode.Acceleration);
+            rb.drag = 1f;
+            rb.AddForce(moveDirection * SlimeMorph.gasSpeed, ForceMode.Acceleration);
         }
     }
     void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            if (SlimeMorph.currentState == SlimeState.Solid)
+            if (SlimeMorph.currentState == SlimeState.Solid) 
+            {
                 rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
+                isGrounded = false;
+            }
         }
 
         if (SlimeMorph.currentState == SlimeState.Gas && Input.GetKey(KeyCode.Space))
@@ -65,10 +89,7 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(Vector3.up * SlimeMorph.gasFloatSpeed, ForceMode.Acceleration);
         }
     }
-    bool IsGrounded()
-    {
-        return Physics.Raycast(transform.position, Vector3.down, 1.1f);
-    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
