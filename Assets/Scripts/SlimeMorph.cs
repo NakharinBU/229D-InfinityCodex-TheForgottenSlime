@@ -12,8 +12,6 @@ public class SlimeMorph : MonoBehaviour
     AudioSource audioSource;
     public AudioClip solidSFX, liquidSFX, gasSFX;
 
-    public TextMeshProUGUI stateText;
-
     public float cooldownTime = 2.0f;
     public float cooldownTimer = 0.0f;
 
@@ -116,7 +114,7 @@ public class SlimeMorph : MonoBehaviour
                 audioSource.PlayOneShot(gasSFX);
                 break;
         }
-        UpdateStateUI();
+
         ChangeStateEffect(newState);
     }
     void ChangeStateEffect(SlimeState newState)
@@ -148,10 +146,7 @@ public class SlimeMorph : MonoBehaviour
             hasPlayedLiquidEffect = false;
         }
     }
-    void UpdateStateUI()
-    {
-        stateText.text = "Current State: " + currentState.ToString();
-    }
+
     void OnCollisionStay(Collision collision)
     {
         if (currentState == SlimeState.Liquid)
