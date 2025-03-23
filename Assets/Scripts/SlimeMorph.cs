@@ -37,7 +37,9 @@ public class SlimeMorph : MonoBehaviour
     public float gasSpeed = 3f;
 
     public float solidJump = 7f;
-    public float gasFloatSpeed = 2f;
+    public float gasFloatSpeed = 5f;
+
+    public bool isBeingBlown = false;
 
     void Start()
     {
@@ -64,10 +66,18 @@ public class SlimeMorph : MonoBehaviour
 
         if (currentState == SlimeState.Gas)
         {
-            rb.AddForce(Vector3.up * gasFloatSpeed, ForceMode.Acceleration);
+            rb.velocity = new Vector3(rb.velocity.x, gasFloatSpeed, rb.velocity.z);
         }
 
     }
+    void FixedUpdate()
+    {
+        if (currentState == SlimeState.Gas && isBeingBlown)
+        {
+            rb.AddTorque(Vector3.up * 5f, ForceMode.Acceleration);
+        }
+    }
+
 
     void ChangeState(SlimeState newState)
     {
@@ -80,7 +90,8 @@ public class SlimeMorph : MonoBehaviour
         switch (newState)
         {
             case SlimeState.Solid:
-                rb.mass = 2f;
+                gameObject.tag = "SolidSlime";
+                rb.mass = 5f;
                 rb.drag = 1f;
                 sphereCollider.enabled = true;
                 transform.localScale = originalScale;
@@ -92,6 +103,7 @@ public class SlimeMorph : MonoBehaviour
                 break;
 
             case SlimeState.Liquid:
+                gameObject.tag = "LiquidSlime";
                 rb.mass = 1f;
                 rb.drag = 3f;
                 transform.localScale = originalScale * 0.7f;
@@ -100,6 +112,7 @@ public class SlimeMorph : MonoBehaviour
                 break;
 
             case SlimeState.Gas:
+                gameObject.tag = "GasSlime";
                 rb.mass = 0.5f;
                 rb.drag = 0.2f;
                 transform.localScale = originalScale * 1.3f;

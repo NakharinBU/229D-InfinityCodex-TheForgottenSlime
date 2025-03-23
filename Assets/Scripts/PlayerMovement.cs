@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
-using static SlimeMorph;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -11,15 +9,12 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 7f;
     private Rigidbody rb;
     private bool isGrounded;
-    AudioSource audioSource;
-    AudioClip movement;
-    SlimeMorph SlimeMorph;
+    SlimeMorph slimeMorph;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        SlimeMorph = GetComponent<SlimeMorph>();
-        audioSource = GetComponent<AudioSource>();
+        slimeMorph = GetComponent<SlimeMorph>();
     }
 
     void Update()
@@ -33,10 +28,6 @@ public class PlayerMovement : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
 
-        float currentSpeed = (SlimeMorph.currentState == SlimeState.Solid) ? SlimeMorph.solidSpeed :
-                             (SlimeMorph.currentState == SlimeState.Liquid) ? SlimeMorph.liquidSpeed :
-                             SlimeMorph.gasSpeed;
-
         Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
 
@@ -46,49 +37,48 @@ public class PlayerMovement : MonoBehaviour
         forward.Normalize();
         right.Normalize();
 
+        Vector3 moveDirection = (forward * moveZ + right * moveX).normalized;
 
-        Vector3 moveDirection = forward * moveZ + right * moveX;
-        moveDirection.Normalize();
+        float currentSpeed = 0f;
+        if (slimeMorph.currentState == SlimeMorph.SlimeState.Solid)
+        {
+            currentSpeed = slimeMorph.solidSpeed;
+            rb.drag = 5f;
+        }
+        else if (slimeMorph.currentState == SlimeMorph.SlimeState.Liquid)
+        {
+            currentSpeed = slimeMorph.liquidSpeed;
+            rb.drag = 1f;
+        }
+        else if (slimeMorph.currentState == SlimeMorph.SlimeState.Gas)
+        {
+            currentSpeed = slimeMorph.gasSpeed;
+            rb.drag = 1f;
+        }
 
-        rb.velocity = new Vector3(moveDirection.x * moveSpeed, rb.velocity.y, moveDirection.z * moveSpeed);
+        rb.velocity = new Vector3(moveDirection.x * currentSpeed, rb.velocity.y, moveDirection.z * currentSpeed);
 
         if (moveDirection.magnitude > 0.1f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
         }
-
-        if (SlimeMorph.currentState == SlimeState.Solid)
-        {
-            rb.drag = 5f;
-            rb.AddForce(moveDirection * SlimeMorph.solidSpeed, ForceMode.Acceleration);
-        }
-        else if (SlimeMorph.currentState == SlimeState.Liquid)
-        {
-            rb.drag = 1f;
-            rb.AddForce(moveDirection * SlimeMorph.liquidSpeed, ForceMode.Acceleration);
-        }
-        else if (SlimeMorph.currentState == SlimeState.Gas)
-        {
-            rb.drag = 1f;
-            rb.AddForce(moveDirection * SlimeMorph.gasSpeed, ForceMode.Acceleration);
-        }
-        
     }
+
     void Jump()
     {
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            if (SlimeMorph.currentState == SlimeState.Solid) 
+            if (slimeMorph.currentState == SlimeMorph.SlimeState.Solid)
             {
                 rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
                 isGrounded = false;
             }
         }
 
-        if (SlimeMorph.currentState == SlimeState.Gas && Input.GetKey(KeyCode.Space))
+        if (slimeMorph.currentState == SlimeMorph.SlimeState.Gas && Input.GetKey(KeyCode.Space))
         {
-            rb.AddForce(Vector3.up * SlimeMorph.gasFloatSpeed, ForceMode.Acceleration);
+            rb.AddForce(Vector3.up * slimeMorph.gasFloatSpeed, ForceMode.Acceleration);
         }
     }
 
@@ -100,4 +90,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        if (slimeMorph.currentState != SlimeMorph.SlimeState.Gas)
+        {
+            rb.angularVelocity = Vector3.zero;
+        }
+    }
 }
