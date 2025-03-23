@@ -12,10 +12,6 @@ public class SlimeMorph : MonoBehaviour
     AudioSource audioSource;
     public AudioClip solidSFX, liquidSFX, gasSFX;
 
-    private bool isSolid = false;
-    private bool isLiquid = false;
-    private bool isGas = false;
-
     public TextMeshProUGUI stateText;
 
     public float cooldownTime = 2.0f;
@@ -28,6 +24,7 @@ public class SlimeMorph : MonoBehaviour
     public ParticleSystem solidEffect;
     public ParticleSystem liquidEffect;
     public ParticleSystem gasEffect;
+
     private bool hasPlayedSolidEffect = false;
     private bool hasPlayedLiquidEffect = false;
     private bool hasPlayedGasEffect = false;
