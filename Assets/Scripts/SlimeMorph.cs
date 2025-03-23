@@ -92,7 +92,6 @@ public class SlimeMorph : MonoBehaviour
                 rb.drag = 1f;
                 sphereCollider.enabled = true;
                 transform.localScale = originalScale;
-                isSolid = true;
                 Physics.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("PassableForLiquid"), false);
                 Physics.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("PassableWall"), false);
                 audioSource.PlayOneShot(solidSFX);
