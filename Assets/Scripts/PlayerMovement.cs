@@ -10,11 +10,14 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     private bool isGrounded;
     SlimeMorph slimeMorph;
+    private float slimeVelocity;
+    Animator anim;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         slimeMorph = GetComponent<SlimeMorph>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -57,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         rb.velocity = new Vector3(moveDirection.x * currentSpeed, rb.velocity.y, moveDirection.z * currentSpeed);
+        anim.SetFloat("Speed", moveDirection.magnitude * currentSpeed);
 
         if (moveDirection.magnitude > 0.1f)
         {
