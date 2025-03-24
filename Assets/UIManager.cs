@@ -6,7 +6,9 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     [Header("UI Elements")]
-    public Slider hpBar; 
+    public float maxHealth = 100f;
+    private float currentHealth;
+    public Slider healthBar;
 
     public Image morphModeIndicator;
     public Sprite solidSprite, liquidSprite, gasSprite;
@@ -17,6 +19,9 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
+        currentHealth = maxHealth;
+        UpdateHealthUI();
+
         slimeMorph = FindObjectOfType<SlimeMorph>();
         UpdateMorphUI();
     }
@@ -59,5 +64,30 @@ public class UIManager : MonoBehaviour
                 Time.timeScale = 1;
             }
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        UpdateHealthUI();
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    void UpdateHealthUI()
+    {
+        if (healthBar != null)
+        {
+            healthBar.value = currentHealth / maxHealth;
+        }
+    }
+
+    void Die()
+    {
+        Debug.Log("Player Died!");
     }
 }

@@ -85,7 +85,7 @@ public class SlimeMorph : MonoBehaviour
         switch (newState)
         {
             case SlimeState.Solid:
-                gameObject.tag = "SolidSlime";
+                //gameObject.tag = "SolidSlime";
                 rb.mass = 5f;
                 rb.drag = 1f;
                 sphereCollider.enabled = true;
@@ -93,11 +93,10 @@ public class SlimeMorph : MonoBehaviour
                 Physics.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("PassableForLiquid"), false);
                 Physics.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("PassableWall"), false);
                 audioSource.PlayOneShot(solidSFX);
-
                 break;
 
             case SlimeState.Liquid:
-                gameObject.tag = "LiquidSlime";
+                //gameObject.tag = "LiquidSlime";
                 rb.mass = 1f;
                 rb.drag = 3f;
                 transform.localScale = originalScale * 0.7f;
@@ -106,7 +105,7 @@ public class SlimeMorph : MonoBehaviour
                 break;
 
             case SlimeState.Gas:
-                gameObject.tag = "GasSlime";
+                //gameObject.tag = "GasSlime";
                 rb.mass = 0.5f;
                 rb.drag = 0.2f;
                 transform.localScale = originalScale * 1.3f;
