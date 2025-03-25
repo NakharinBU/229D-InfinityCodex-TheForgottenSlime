@@ -35,7 +35,7 @@ public class SlimeMorph : MonoBehaviour
     public float gasSpeed = 3f;
 
     public float solidJump = 7f;
-    public float gasFloatSpeed = 5f;
+    public float gasFloatSpeed = 4f;
 
     public bool isBeingBlown = false;
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BreakableDoor : MonoBehaviour
+public class BreakableObject : MonoBehaviour
 {
     public float requiredForce = 10f;
     private Rigidbody rb;
