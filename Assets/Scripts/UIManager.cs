@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class UIManager : MonoBehaviour
 {
@@ -10,8 +11,8 @@ public class UIManager : MonoBehaviour
     private float currentHealth;
     public Slider healthBar;
 
-    public Image morphModeIndicator;
-    public Sprite solidSprite, liquidSprite, gasSprite;
+    public Image solid,liquid,gas;
+
     private SlimeMorph slimeMorph;
 
     private bool isPaused = false;
@@ -32,18 +33,38 @@ public class UIManager : MonoBehaviour
         PasueGame();
     }
 
+    void SetColor(Image state) 
+    {
+        Color newColor = state.color;
+        newColor.a = 0.5f;
+        state.color = newColor;
+    }
+
+    void ResetColor(Image state)
+    {
+        Color newColor = state.color;
+        newColor.a = 1;
+        state.color = newColor;
+    }
+
     void UpdateMorphUI()
     {
         switch (slimeMorph.currentState)
         {
             case SlimeMorph.SlimeState.Solid:
-                morphModeIndicator.sprite = solidSprite;
+                ResetColor(solid);
+                SetColor(liquid);
+                SetColor(gas);
                 break;
             case SlimeMorph.SlimeState.Liquid:
-                morphModeIndicator.sprite = liquidSprite;
+                ResetColor(liquid);
+                SetColor(solid);
+                SetColor(gas);
                 break;
             case SlimeMorph.SlimeState.Gas:
-                morphModeIndicator.sprite = gasSprite;
+                ResetColor(gas);
+                SetColor(liquid);
+                SetColor(solid);
                 break;
         }
     }

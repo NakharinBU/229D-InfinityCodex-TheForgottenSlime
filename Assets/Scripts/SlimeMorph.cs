@@ -8,6 +8,9 @@ public class SlimeMorph : MonoBehaviour
 {
     public enum SlimeState { Solid, Liquid, Gas }
     public SlimeState currentState = SlimeState.Solid;
+    public SlimeState previousState;
+
+    private PlayerMovement playerMovement;
 
     AudioSource audioSource;
     public AudioClip solidSFX, liquidSFX, gasSFX;
@@ -42,7 +45,7 @@ public class SlimeMorph : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         sphereCollider = GetComponent<SphereCollider>();
         originalScale = transform.localScale;
-        Debug.Log("Slime Layer: " + LayerMask.LayerToName(gameObject.layer));
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     void Update()
@@ -59,11 +62,10 @@ public class SlimeMorph : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha3) && cooldownTimer <= 0)
             ChangeState(SlimeState.Gas);
 
-        if (currentState == SlimeState.Gas)
+        if (currentState == SlimeState.Gas && !playerMovement.isTouchingCeiling)
         {
-            rb.velocity = new Vector3(rb.velocity.x, gasFloatSpeed, rb.velocity.z);
+            rb.AddForce(Vector3.up * gasFloatSpeed, ForceMode.Acceleration);
         }
-
     }
     void FixedUpdate()
     {
@@ -77,10 +79,14 @@ public class SlimeMorph : MonoBehaviour
     void ChangeState(SlimeState newState)
     {
         if (cooldownTimer > 0) return;
-        
         cooldownTimer = cooldownTime;
-        
+
+        if (currentState == newState) return;
+        previousState = currentState;
         currentState = newState;
+
+        playerMovement.UpdateMorphState(newState);
+
 
         switch (newState)
         {

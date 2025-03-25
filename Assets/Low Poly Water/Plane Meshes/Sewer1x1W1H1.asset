@@ -6,7 +6,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sewer Water10x10W100H100
+  m_Name: Sewer1x1W1H1
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2

@@ -6,13 +6,13 @@ public class PlayerMovement : MonoBehaviour
 {
     public Transform cameraTransform;
     public float moveSpeed = 5f;
-    public float jumpForce = 7f;
+    public float jumpForce = 10f;
     private Rigidbody rb;
     private bool isGrounded;
     SlimeMorph slimeMorph;
     private float slimeVelocity;
     Animator anim;
-
+    public bool isTouchingCeiling = false;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -79,11 +79,6 @@ public class PlayerMovement : MonoBehaviour
                 isGrounded = false;
             }
         }
-
-        if (slimeMorph.currentState == SlimeMorph.SlimeState.Gas && Input.GetKey(KeyCode.Space))
-        {
-            rb.AddForce(Vector3.up * slimeMorph.gasFloatSpeed, ForceMode.Acceleration);
-        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -92,6 +87,17 @@ public class PlayerMovement : MonoBehaviour
         {
             isGrounded = true;
         }
+        if (collision.gameObject.CompareTag("Ceiling"))
+        {
+            isTouchingCeiling = true;
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ceiling"))
+        {
+            isTouchingCeiling = false;
+        }
     }
 
     private void FixedUpdate()
@@ -99,6 +105,27 @@ public class PlayerMovement : MonoBehaviour
         if (slimeMorph.currentState != SlimeMorph.SlimeState.Gas)
         {
             rb.angularVelocity = Vector3.zero;
+        }
+    }
+
+    public void UpdateMorphState(SlimeMorph.SlimeState newState)
+    {
+        if (newState == SlimeMorph.SlimeState.Solid && slimeMorph.previousState == SlimeMorph.SlimeState.Gas)
+        {
+            StartCoroutine(FallFaster());
+        }
+    }
+
+    private IEnumerator FallFaster()
+    {
+        float fallDuration = 1.5f;
+        float timer = 0f;
+
+        while (timer < fallDuration)
+        {
+            rb.AddForce(Vector3.down * 20f, ForceMode.Acceleration);
+            timer += Time.deltaTime;
+            yield return null;
         }
     }
 }

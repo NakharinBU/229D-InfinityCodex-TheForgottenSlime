@@ -23,7 +23,7 @@ public class PressurePlate : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("SolidSlime") || other.CompareTag("objtopush") && !isPressed)
+        if (other.CompareTag("Player") || other.CompareTag("objtopush") && !isPressed)
         {
             //transform.position = originalPressPosition - new Vector3(0, pressDepth, 0);
             isPressed = true;
@@ -33,7 +33,7 @@ public class PressurePlate : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("SolidSlime") || other.CompareTag("objtopush") && isPressed)
+        if (other.CompareTag("Player") || other.CompareTag("objtopush") && isPressed)
         {
             //transform.position = originalPressPosition;
             isPressed = false;

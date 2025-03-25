@@ -12,7 +12,8 @@ public class FanController : MonoBehaviour
     {
         SlimeMorph slime = other.GetComponent<SlimeMorph>();
 
-        if (slime != null && slime.currentState == SlimeMorph.SlimeState.Gas)
+        if (slime != null && (slime.currentState == SlimeMorph.SlimeState.Gas || 
+                              slime.currentState == SlimeMorph.SlimeState.Liquid))
         {
             Rigidbody rb = other.GetComponent<Rigidbody>();
             if (rb != null)
