@@ -16,7 +16,10 @@ public class UIManager : MonoBehaviour
     private SlimeMorph slimeMorph;
 
     private bool isPaused = false;
-    public GameObject PauseUI;
+    public PauseMenu pauseMenu;
+
+    private bool isDead = false;
+    public PlayAgain player; 
 
     void Start()
     {
@@ -76,13 +79,11 @@ public class UIManager : MonoBehaviour
             isPaused = !isPaused;
             if (isPaused)
             {
-                PauseUI.SetActive(true);
-                Time.timeScale = 0;
+                pauseMenu.Pause();
             }
             else if (!isPaused)
             {
-                PauseUI.SetActive(false);
-                Time.timeScale = 1;
+                pauseMenu.Resume();
             }
         }
     }
@@ -95,6 +96,7 @@ public class UIManager : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            isDead = true;
             Die();
         }
     }
@@ -109,6 +111,9 @@ public class UIManager : MonoBehaviour
 
     void Die()
     {
-        Debug.Log("Player Died!");
+        if (isDead == true)
+        {
+            player.Died();
+        }
     }
 }

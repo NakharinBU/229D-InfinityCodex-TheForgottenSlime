@@ -12,7 +12,8 @@ public class MainmenuUI : MonoBehaviour
 
     public void BackMainMenu() 
     {
-        SceneManager.LoadSceneAsync(0);
+        Debug.Log("Hello");
+        //SceneManager.LoadScene(0);
     }
 
     public void QuitGame()

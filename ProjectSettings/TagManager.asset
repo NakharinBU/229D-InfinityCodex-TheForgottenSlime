@@ -11,6 +11,7 @@ TagManager:
   - LiquidSlime
   - GasSlime
   - Ceiling
+  - Pushable
   layers:
   - Default
   - TransparentFX

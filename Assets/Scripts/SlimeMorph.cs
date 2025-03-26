@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 public class SlimeMorph : MonoBehaviour
 {
     public enum SlimeState { Solid, Liquid, Gas }
@@ -15,7 +14,7 @@ public class SlimeMorph : MonoBehaviour
     AudioSource audioSource;
     public AudioClip solidSFX, liquidSFX, gasSFX;
 
-    public float cooldownTime = 2.0f;
+    public float cooldownTime = 1.0f;
     public float cooldownTimer = 0.0f;
 
     private Rigidbody rb;

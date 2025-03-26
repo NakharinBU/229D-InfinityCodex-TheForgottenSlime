@@ -4,56 +4,34 @@ using UnityEngine;
 
 public class PressurePlate : MonoBehaviour
 {
-    public GameObject door;
-    public Vector3 doorOpenPosition;
-
-    //private Vector3 originalPressPosition;
-    //public float pressDepth = 0.1f;
-    private Vector3 doorClosedPosition;
+    public GameObject indicatorLight;
     private bool isPressed = false;
+
+    private DoorController doorController;
 
     void Start()
     {
-        //originalPressPosition = transform.position;
-        if (door != null)
-        {
-            doorClosedPosition = door.transform.position;
-        }
+        doorController = FindObjectOfType<DoorController>();
+        if (indicatorLight != null) indicatorLight.SetActive(false);
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("objtopush") && !isPressed)
+        if (other.CompareTag("Pushable"))
         {
-            //transform.position = originalPressPosition - new Vector3(0, pressDepth, 0);
             isPressed = true;
-            OpenDoor();
+            if (indicatorLight != null) indicatorLight.SetActive(true);
+            doorController.UpdatePressureState(1);
         }
     }
 
-    void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("objtopush") && isPressed)
+        if (other.CompareTag("Pushable"))
         {
-            //transform.position = originalPressPosition;
             isPressed = false;
-            CloseDoor();
-        }
-    }
-
-    void OpenDoor()
-    {
-        if (door != null)
-        {
-            door.transform.position = doorOpenPosition;
-        }
-    }
-
-    void CloseDoor()
-    {
-        if (door != null)
-        {
-            door.transform.position = doorClosedPosition;
+            if (indicatorLight != null) indicatorLight.SetActive(false);
+            doorController.UpdatePressureState(-1);
         }
     }
 }
