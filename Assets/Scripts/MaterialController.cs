@@ -20,10 +20,6 @@ public class MaterialController : MonoBehaviour
             slimeMorph = FindObjectOfType<SlimeMorph>();
         }
 
-        if (skinnedRenderer == null)
-        {
-            Debug.LogError("SkinnedMeshRenderer not found on this GameObject!");
-        }
     }
 
     private void Update()
@@ -45,11 +41,7 @@ public class MaterialController : MonoBehaviour
                     break;
             }
 
-            skinnedRenderer.materials = mats; // Update new Material
-        }
-        else
-        {
-            Debug.LogWarning("Missing SkinnedMeshRenderer or SlimeMorph!");
+            skinnedRenderer.materials = mats;
         }
     }
 }

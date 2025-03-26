@@ -6,7 +6,6 @@ using Unity.VisualScripting;
 
 public class UIManager : MonoBehaviour
 {
-    [Header("UI Elements")]
     public float maxHealth = 100f;
     private float currentHealth;
     public Slider healthBar;

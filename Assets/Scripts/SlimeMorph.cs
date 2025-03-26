@@ -14,7 +14,7 @@ public class SlimeMorph : MonoBehaviour
     AudioSource audioSource;
     public AudioClip solidSFX, liquidSFX, gasSFX;
 
-    public float cooldownTime = 1.0f;
+    public float cooldownTime = 1.5f;
     public float cooldownTimer = 0.0f;
 
     private Rigidbody rb;
