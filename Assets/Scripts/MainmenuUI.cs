@@ -5,15 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class MainmenuUI : MonoBehaviour
 {
+    public GameObject option;
     public void PlayGame()
     {
         SceneManager.LoadSceneAsync(1);
     }
 
-    public void BackMainMenu() 
+    public void Option()
     {
-        Debug.Log("Hello");
-        //SceneManager.LoadScene(0);
+        option.SetActive(true);
+    }
+
+    public void Back()
+    { 
+        option.SetActive(false);
     }
 
     public void QuitGame()
