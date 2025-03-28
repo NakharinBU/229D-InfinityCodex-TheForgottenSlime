@@ -33,9 +33,6 @@ public class SlimeMorph : MonoBehaviour
 
     public float acceleration = 20f;
 
-    public float solidJump = 7f;
-    public float gasFloatForce = 5f;
-
     public bool isBeingBlown = false;
 
     private PhysicMaterial solidMaterial, liquidMaterial, gasMaterial;
@@ -77,19 +74,6 @@ public class SlimeMorph : MonoBehaviour
             ChangeState(SlimeState.Liquid);
         if (Input.GetKeyDown(KeyCode.Alpha3) && cooldownTimer <= 0)
             ChangeState(SlimeState.Gas);
-    }
-
-    void FixedUpdate()
-    {
-        if (currentState == SlimeState.Gas && !playerMovement.isTouchingCeiling)
-        {
-            rb.AddForce(Vector3.up * gasFloatForce, ForceMode.Force);
-        }
-
-        if (currentState == SlimeState.Gas && isBeingBlown)
-        {
-            rb.AddTorque(Vector3.up * 5f, ForceMode.Acceleration);
-        }
     }
 
     void ChangeState(SlimeState newState)

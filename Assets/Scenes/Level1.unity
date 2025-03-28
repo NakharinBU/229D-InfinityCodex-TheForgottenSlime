@@ -5583,9 +5583,45 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 908029450398035801, guid: 68f8c11acce15a047815a6a44159859b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 908029450398035801, guid: 68f8c11acce15a047815a6a44159859b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 908029450398035801, guid: 68f8c11acce15a047815a6a44159859b, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474624498066591794, guid: 68f8c11acce15a047815a6a44159859b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474624498066591794, guid: 68f8c11acce15a047815a6a44159859b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1640004459358590286, guid: 68f8c11acce15a047815a6a44159859b, type: 3}
       propertyPath: m_Name
       value: UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3979631805072770203, guid: 68f8c11acce15a047815a6a44159859b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 248
+      objectReference: {fileID: 0}
+    - target: {fileID: 3979631805072770203, guid: 68f8c11acce15a047815a6a44159859b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -160
+      objectReference: {fileID: 0}
+    - target: {fileID: 6853982489890244616, guid: 68f8c11acce15a047815a6a44159859b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -447
+      objectReference: {fileID: 0}
+    - target: {fileID: 6853982489890244616, guid: 68f8c11acce15a047815a6a44159859b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -271
       objectReference: {fileID: 0}
     - target: {fileID: 7221303865206289373, guid: 68f8c11acce15a047815a6a44159859b, type: 3}
       propertyPath: m_Pivot.x
@@ -5673,6 +5709,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7746614789274907567, guid: 68f8c11acce15a047815a6a44159859b, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8538594231958131937, guid: 68f8c11acce15a047815a6a44159859b, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -7584,6 +7624,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3134758202657112795, guid: 89ced3b171a72a84e9ce0f59e96b9b25, type: 3}
+      propertyPath: requiredForce
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5676348522468817650, guid: 89ced3b171a72a84e9ce0f59e96b9b25, type: 3}
       propertyPath: m_Name
       value: Cube (2)
