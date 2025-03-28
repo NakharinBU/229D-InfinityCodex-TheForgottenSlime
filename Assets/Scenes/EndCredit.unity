@@ -156,7 +156,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 837, y: -1369}
+  m_AnchoredPosition: {x: 837, y: -1403}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &237263391
@@ -197,57 +197,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 237263389}
   m_CullTransparentMesh: 1
---- !u!1 &314516748
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 314516749}
-  - component: {fileID: 314516750}
-  m_Layer: 5
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &314516749
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 314516748}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 890368921}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &314516750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 314516748}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b399dc4922aba6f419355c617729a6e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  endGameText: {fileID: 502732898}
-  creditText: {fileID: 392656680}
-  scrollSpeed: 50
 --- !u!1 &349339065
 GameObject:
   m_ObjectHideFlags: 0
@@ -279,11 +228,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 502732898}
+  m_Father: {fileID: 392656680}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -206, y: -274}
+  m_AnchoredPosition: {x: 478, y: -1677}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &349339067
@@ -306,7 +255,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press Spacebar To Skip End Credits
+  m_text: Press Spacebar To Back to Mainmenu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -333,8 +282,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -369,7 +318,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -472.39307, w: 0}
+  m_margin: {x: 0, y: 0, z: -741.94507, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -406,6 +355,7 @@ GameObject:
   - component: {fileID: 392656680}
   - component: {fileID: 392656682}
   - component: {fileID: 392656681}
+  - component: {fileID: 392656683}
   m_Layer: 5
   m_Name: End Credit
   m_TagString: Untagged
@@ -426,6 +376,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 237263390}
+  - {fileID: 349339066}
   m_Father: {fileID: 890368921}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -453,19 +404,92 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "EMD CREDITS\n\nGroup Name : InfinityCodex\nMember List\n--------------------------------------------------------------------------------------------\n\n1660707769
-    Nareudol Salee 229D No.30 - Level Designer / Story Writer\n1660707918 Napat Puttaniramol
-    229D No.32 - 2D Artist / AI Art Generator\n1660707959 Nakharin Sisen 229D No.33
-    - Programmer / Game Director\n\n--------------------------------------------------------------------------------------------\n\nSpecial
-    Thanks\n--------------------------------------------------------------------------------------------\nFree
-    Assets from Unity Asset Store\n--------------------------------------------------------------------------------------------\n\n3D
-    Free Modular Kit - Barking Dog\nLite Dungeon Pack Low Poly 3D Art - Gridness\r\nLow
-    Poly Dungeons Lite - JustCreate\nUnderground Industrial Models - Mario Haberle\nPipe
-    constructor - James Lowart\nKawaii Slimes - Awaii Studio\nRPG Essentials Sound
-    Effects - \rleohpaz\nSimple Particles FX : Toon Effects - Indian Ocean Assets\r\nHyper
-    Casual Urban Asset Pack - HEXXX\nDOTween (HOTween v2) - Demigiant\n\n--------------------------------------------------------------------------------------------\nGenerative
-    AI\n--------------------------------------------------------------------------------------------\n\nPicture
-    form Recraft.ai\nBGM from Suno AI\nSound Effect from Elevenlabs.io\n\n--------------------------------------------------------------------------------------------"
+  m_text: 'END CREDITS
+
+    
+
+    Group Name : InfinityCodex
+
+    Member List
+
+    --------------------------------------------------------------------------------------------
+
+    
+
+    1660707769
+    Nareudol Salee 229D No.30 - Level Designer / Story Writer
+
+    1660707918 Napat
+    Puttaniramol 229D No.32 - 2D Artist / AI Art Generator
+
+    1660707959 Nakharin
+    Sisen 229D No.33 - Programmer / Game Director
+
+    
+
+    --------------------------------------------------------------------------------------------
+
+    
+
+    Special
+    Thanks
+
+    --------------------------------------------------------------------------------------------
+
+    Free
+    Assets from Unity Asset Store
+
+    --------------------------------------------------------------------------------------------
+
+    
+
+    3D
+    Free Modular Kit - Barking Dog
+
+    Lite Dungeon Pack Low Poly 3D Art - Gridness
+
+    Low
+    Poly Dungeons Lite - JustCreate
+
+    Underground Industrial Models - Mario Haberle
+
+    Pipe
+    constructor - James Lowart
+
+    Kawaii Slimes - Awaii Studio
+
+    RPG Essentials
+    Sound Effects - leohpaz
+
+    Simple Particles FX : Toon Effects - Indian Ocean
+    Assets
+
+    Hyper Casual Urban Asset Pack - HEXXX
+
+    DOTween (HOTween v2)
+    - Demigiant
+
+    
+
+    --------------------------------------------------------------------------------------------
+
+    Generative
+    AI
+
+    --------------------------------------------------------------------------------------------
+
+    
+
+    Picture
+    form Recraft.ai
+
+    BGM from Suno AI
+
+    Sound Effect from Elevenlabs.io
+
+    
+
+    --------------------------------------------------------------------------------------------'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -542,6 +566,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 392656679}
   m_CullTransparentMesh: 1
+--- !u!114 &392656683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 392656679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b399dc4922aba6f419355c617729a6e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endGameText: {fileID: 392656680}
+  scrollSpeed: 40
 --- !u!1 &502732897
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,6 +591,7 @@ GameObject:
   - component: {fileID: 502732898}
   - component: {fileID: 502732900}
   - component: {fileID: 502732899}
+  - component: {fileID: 502732901}
   m_Layer: 5
   m_Name: You Escased
   m_TagString: Untagged
@@ -571,8 +610,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 349339066}
+  m_Children: []
   m_Father: {fileID: 890368921}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -677,6 +715,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 502732897}
   m_CullTransparentMesh: 1
+--- !u!114 &502732901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502732897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b399dc4922aba6f419355c617729a6e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endGameText: {fileID: 502732898}
+  scrollSpeed: 30
 --- !u!1 &593902030
 GameObject:
   m_ObjectHideFlags: 0
@@ -849,7 +901,6 @@ RectTransform:
   - {fileID: 593902031}
   - {fileID: 502732898}
   - {fileID: 392656680}
-  - {fileID: 314516749}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
