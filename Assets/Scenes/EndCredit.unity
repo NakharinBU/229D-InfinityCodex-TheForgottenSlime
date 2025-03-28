@@ -156,7 +156,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 837, y: -1403}
+  m_AnchoredPosition: {x: 774, y: -1449}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &237263391
@@ -232,7 +232,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 478, y: -1677}
+  m_AnchoredPosition: {x: 400, y: -1655}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &349339067
@@ -406,7 +406,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'END CREDITS
 
-    
+
 
     Group Name : InfinityCodex
 
@@ -414,7 +414,7 @@ MonoBehaviour:
 
     --------------------------------------------------------------------------------------------
 
-    
+
 
     1660707769
     Nareudol Salee 229D No.30 - Level Designer / Story Writer
@@ -425,11 +425,11 @@ MonoBehaviour:
     1660707959 Nakharin
     Sisen 229D No.33 - Programmer / Game Director
 
-    
+
 
     --------------------------------------------------------------------------------------------
 
-    
+
 
     Special
     Thanks
@@ -441,7 +441,7 @@ MonoBehaviour:
 
     --------------------------------------------------------------------------------------------
 
-    
+
 
     3D
     Free Modular Kit - Barking Dog
@@ -466,10 +466,10 @@ MonoBehaviour:
 
     Hyper Casual Urban Asset Pack - HEXXX
 
-    DOTween (HOTween v2)
-    - Demigiant
+    DOTween (HOTween v2) -
+    Demigiant
 
-    
+
 
     --------------------------------------------------------------------------------------------
 
@@ -478,7 +478,6 @@ MonoBehaviour:
 
     --------------------------------------------------------------------------------------------
 
-    
 
     Picture
     form Recraft.ai
@@ -487,7 +486,6 @@ MonoBehaviour:
 
     Sound Effect from Elevenlabs.io
 
-    
 
     --------------------------------------------------------------------------------------------'
   m_isRightToLeft: 0
