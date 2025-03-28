@@ -9,42 +9,59 @@ public class SlimeMorph : MonoBehaviour
     public SlimeState currentState = SlimeState.Solid;
     public SlimeState previousState;
 
-    private PlayerMovement playerMovement;
+    public PlayerMovement playerMovement;
+    public Rigidbody rb;
+    public SphereCollider sphereCollider;
+    public Vector3 originalScale;
 
-    AudioSource audioSource;
+    private AudioSource audioSource;
     public AudioClip solidSFX, liquidSFX, gasSFX;
 
-    public float cooldownTime = 1.5f;
-    public float cooldownTimer = 0.0f;
-
-    private Rigidbody rb;
-    private SphereCollider sphereCollider;
-    private Vector3 originalScale;
+    public float cooldownTime = 1f;
+    private float cooldownTimer = 0.0f;
 
     public ParticleSystem solidEffect;
     public ParticleSystem liquidEffect;
     public ParticleSystem gasEffect;
 
-    private bool hasPlayedSolidEffect = false;
-    private bool hasPlayedLiquidEffect = false;
-    private bool hasPlayedGasEffect = false;
-
     public float solidSpeed = 5f;
     public float liquidSpeed = 8f;
     public float gasSpeed = 3f;
 
+    public float gasVolume = 1.0f;
+    public float gasMass = 1.0f;
+
+    public float acceleration = 20f;
+
     public float solidJump = 7f;
-    public float gasFloatSpeed = 4f;
+    public float gasFloatForce = 5f;
 
     public bool isBeingBlown = false;
 
+    private PhysicMaterial solidMaterial, liquidMaterial, gasMaterial;
+
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
         sphereCollider = GetComponent<SphereCollider>();
         originalScale = transform.localScale;
         playerMovement = GetComponent<PlayerMovement>();
+        audioSource = GetComponent<AudioSource>();
+
+        solidMaterial = new PhysicMaterial();
+        solidMaterial.bounciness = 0.2f;
+        solidMaterial.dynamicFriction = 0.5f;
+        solidMaterial.staticFriction = 0.6f;
+
+        liquidMaterial = new PhysicMaterial();
+        liquidMaterial.bounciness = 0f;
+        liquidMaterial.dynamicFriction = 0.2f;
+        liquidMaterial.staticFriction = 0.1f;
+
+        gasMaterial = new PhysicMaterial();
+        gasMaterial.bounciness = 0f;
+        gasMaterial.dynamicFriction = 0.0f;
+        gasMaterial.staticFriction = 0.0f;
     }
 
     void Update()
@@ -60,39 +77,39 @@ public class SlimeMorph : MonoBehaviour
             ChangeState(SlimeState.Liquid);
         if (Input.GetKeyDown(KeyCode.Alpha3) && cooldownTimer <= 0)
             ChangeState(SlimeState.Gas);
-
-        if (currentState == SlimeState.Gas && !playerMovement.isTouchingCeiling)
-        {
-            rb.AddForce(Vector3.up * gasFloatSpeed, ForceMode.Acceleration);
-        }
     }
+
     void FixedUpdate()
     {
+        if (currentState == SlimeState.Gas && !playerMovement.isTouchingCeiling)
+        {
+            rb.AddForce(Vector3.up * gasFloatForce, ForceMode.Force);
+        }
+
         if (currentState == SlimeState.Gas && isBeingBlown)
         {
             rb.AddTorque(Vector3.up * 5f, ForceMode.Acceleration);
         }
     }
 
-
     void ChangeState(SlimeState newState)
     {
         if (cooldownTimer > 0) return;
-        cooldownTimer = cooldownTime;
-
         if (currentState == newState) return;
+
+        cooldownTimer = cooldownTime;
         previousState = currentState;
         currentState = newState;
 
         playerMovement.UpdateMorphState(newState);
 
-
         switch (newState)
         {
             case SlimeState.Solid:
-                //gameObject.tag = "SolidSlime";
                 rb.mass = 5f;
                 rb.drag = 1f;
+                rb.useGravity = true;
+                sphereCollider.material = solidMaterial;
                 sphereCollider.enabled = true;
                 transform.localScale = originalScale;
                 Physics.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("PassableForLiquid"), false);
@@ -101,53 +118,48 @@ public class SlimeMorph : MonoBehaviour
                 break;
 
             case SlimeState.Liquid:
-                //gameObject.tag = "LiquidSlime";
-                rb.mass = 1f;
+                rb.mass = 1.5f;
                 rb.drag = 3f;
+                rb.useGravity = true;
+                sphereCollider.material = liquidMaterial;
                 transform.localScale = originalScale * 0.7f;
                 Physics.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("PassableForLiquid"), true);
+                Physics.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("PassableWall"), false);
                 audioSource.PlayOneShot(liquidSFX);
                 break;
 
             case SlimeState.Gas:
-                //gameObject.tag = "GasSlime";
-                rb.mass = 0.5f;
-                rb.drag = 0.2f;
+                rb.mass = 0.2f;
+                rb.drag = 0.1f;
+                rb.useGravity = false;
+                sphereCollider.material = gasMaterial;
                 transform.localScale = originalScale * 1.3f;
                 Physics.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("PassableWall"), true);
+                Physics.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("PassableForLiquid"), true);
                 audioSource.PlayOneShot(gasSFX);
                 break;
         }
 
         ChangeStateEffect(newState);
     }
+
     void ChangeStateEffect(SlimeState newState)
     {
-
         if (solidEffect.isPlaying) solidEffect.Stop();
         if (liquidEffect.isPlaying) liquidEffect.Stop();
         if (gasEffect.isPlaying) gasEffect.Stop();
 
-        if (newState == SlimeState.Solid && !hasPlayedSolidEffect)
+        switch (newState)
         {
-            solidEffect.Play();
-            hasPlayedSolidEffect = true;
-            hasPlayedLiquidEffect = false;
-            hasPlayedGasEffect = false;
-        }
-        else if (newState == SlimeState.Liquid && !hasPlayedLiquidEffect)
-        {
-            liquidEffect.Play();
-            hasPlayedLiquidEffect = true;
-            hasPlayedSolidEffect = false;
-            hasPlayedGasEffect = false;
-        }
-        else if (newState == SlimeState.Gas && !hasPlayedGasEffect)
-        {
-            gasEffect.Play();
-            hasPlayedGasEffect = true;
-            hasPlayedSolidEffect = false;
-            hasPlayedLiquidEffect = false;
+            case SlimeState.Solid:
+                solidEffect.Play();
+                break;
+            case SlimeState.Liquid:
+                liquidEffect.Play();
+                break;
+            case SlimeState.Gas:
+                gasEffect.Play();
+                break;
         }
     }
 
@@ -159,5 +171,4 @@ public class SlimeMorph : MonoBehaviour
             rb.AddForce(slopeDirection * liquidSpeed, ForceMode.Acceleration);
         }
     }
-
 }

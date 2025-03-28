@@ -6,13 +6,16 @@ public class PlayerMovement : MonoBehaviour
 {
     public Transform cameraTransform;
     public float moveSpeed = 5f;
-    public float jumpForce = 10f;
+    public float jumpForce;
     private Rigidbody rb;
     private bool isGrounded;
-    SlimeMorph slimeMorph;
-    private float slimeVelocity;
-    Animator anim;
+    private SlimeMorph slimeMorph;
+    private Animator anim;
     public bool isTouchingCeiling = false;
+
+    private float gravity = 9.81f;
+    private float airDensity = 1.2f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -51,12 +54,12 @@ public class PlayerMovement : MonoBehaviour
         else if (slimeMorph.currentState == SlimeMorph.SlimeState.Liquid)
         {
             currentSpeed = slimeMorph.liquidSpeed;
-            rb.drag = 1f;
+            rb.drag = 2f;
         }
         else if (slimeMorph.currentState == SlimeMorph.SlimeState.Gas)
         {
             currentSpeed = slimeMorph.gasSpeed;
-            rb.drag = 1f;
+            rb.drag = 0.2f;
         }
 
         rb.velocity = new Vector3(moveDirection.x * currentSpeed, rb.velocity.y, moveDirection.z * currentSpeed);
@@ -71,11 +74,13 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {
+        jumpForce = slimeMorph.rb.mass * slimeMorph.acceleration;
+
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             if (slimeMorph.currentState == SlimeMorph.SlimeState.Solid)
             {
-                rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
+                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                 isGrounded = false;
             }
         }
@@ -102,9 +107,25 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (slimeMorph.currentState != SlimeMorph.SlimeState.Gas)
+        if (slimeMorph.currentState == SlimeMorph.SlimeState.Gas)
+        {
+            ApplyBuoyancyForce();
+        }
+        else
         {
             rb.angularVelocity = Vector3.zero;
+        }
+    }
+
+    private void ApplyBuoyancyForce()
+    {
+        float volume = slimeMorph.gasVolume;
+        float buoyantForce = airDensity * volume * gravity;
+        float weight = slimeMorph.gasMass * gravity;
+
+        if (buoyantForce > weight)
+        {
+            rb.AddForce(Vector3.up * (buoyantForce - weight), ForceMode.Acceleration);
         }
     }
 

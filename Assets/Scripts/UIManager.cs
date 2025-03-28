@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         UpdateMorphUI();
-        PasueGame();
+        PauseGame();
     }
 
     void SetColor(Image state) 
@@ -71,18 +71,19 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    void PasueGame()
+    void PauseGame()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             isPaused = !isPaused;
-            if (isPaused)
+            if (isPaused && !(currentHealth <= 0))
             {
                 pauseMenu.Pause();
             }
             else if (!isPaused)
             {
                 pauseMenu.Resume();
+                pauseMenu.option.SetActive(false);
             }
         }
     }

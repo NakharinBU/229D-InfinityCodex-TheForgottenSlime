@@ -5,7 +5,7 @@ using UnityEngine;
 public class PressurePlate : MonoBehaviour
 {
     public GameObject indicatorLight;
-    private bool isPressed = false;
+    private bool isPressed;
 
     private DoorController doorController;
 

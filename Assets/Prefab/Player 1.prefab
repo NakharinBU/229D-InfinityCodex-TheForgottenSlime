@@ -162,8 +162,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1073052173604193199}
   serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 5
+  m_Drag: 5
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -196,6 +196,7 @@ MonoBehaviour:
   cameraTransform: {fileID: 0}
   moveSpeed: 10
   jumpForce: 7
+  isTouchingCeiling: 0
 --- !u!114 &7805774017430936207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,19 +210,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
+  previousState: 0
+  playerMovement: {fileID: 0}
+  rb: {fileID: 0}
+  sphereCollider: {fileID: 0}
+  originalScale: {x: 0, y: 0, z: 0}
   solidSFX: {fileID: 8300000, guid: d1bb40254ac940a479e9dc701701af21, type: 3}
   liquidSFX: {fileID: 8300000, guid: 32b9030545759c04bbcbd8516c803cea, type: 3}
   gasSFX: {fileID: 8300000, guid: 934f7c0eeafa6ee4296aa2907cfb07a1, type: 3}
-  cooldownTime: 2
-  cooldownTimer: 0
+  cooldownTime: 1
   solidEffect: {fileID: 9204291266847667607}
   liquidEffect: {fileID: 4845761502490064309}
   gasEffect: {fileID: 4359355801717565152}
   solidSpeed: 5
   liquidSpeed: 8
   gasSpeed: 3
+  gasVolume: 1
+  gasMass: 1
+  acceleration: 20
   solidJump: 7
-  gasFloatSpeed: 5
+  gasFloatForce: 5
   isBeingBlown: 0
 --- !u!114 &3958357336287095887
 MonoBehaviour:
@@ -258,10 +266,8 @@ MonoBehaviour:
   solid: {fileID: 0}
   liquid: {fileID: 0}
   gas: {fileID: 0}
-  solidSprite: {fileID: 21300000, guid: 4c4f1b709efc3d0448787160ee614702, type: 3}
-  liquidSprite: {fileID: 21300000, guid: 72f603bf1b86db144918f16869476406, type: 3}
-  gasSprite: {fileID: 21300000, guid: b7f39417ce389334c8144b447080ed50, type: 3}
-  PauseUI: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  player: {fileID: 0}
 --- !u!82 &7267599660100353506
 AudioSource:
   m_ObjectHideFlags: 0
